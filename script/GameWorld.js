@@ -1,3 +1,7 @@
+
+const DELTA = 1/100;
+
+
 function GameWorld() {
 
   this.whiteBall = new Ball(new Vector2(411, 413));
