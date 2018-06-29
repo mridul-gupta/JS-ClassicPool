@@ -1,8 +1,10 @@
 const BALL_ORIGIN = new Vector2(25, 25);
 
-function Ball(position) {
+function Ball(position, color) {
   this.position = position;
   this.velocity = new Vector2();
+  this.moving = false;
+  this.sprite = getBallSpritByColor(color);
 }
 
 
@@ -10,14 +12,20 @@ Ball.prototype.update = function() {
 
   this.position.addTo(this.velocity.mult(DELTA));
   this.velocity = this.velocity.mult(0.97);
+
+  if (this.velocity.length() < 5) {
+    this.velocity = new Vector2();
+    this.moving = false;
+  }
 }
 
 Ball.prototype.draw = function() {
-  Canvas.drawImage(sprites.whiteBall, this.position, BALL_ORIGIN);
+  Canvas.drawImage(this.sprite, this.position, BALL_ORIGIN);
 }
 
 
 Ball.prototype.shoot = function(power, rotation) {
   // console.log("Ball Shoot");
   this.velocity = new Vector2(power * Math.cos(rotation), power * Math.sin(rotation));
+  this.moving = true;
 }
